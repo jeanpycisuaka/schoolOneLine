@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formulaire de Paiement</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #a19898;
+      color: #7a3434;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      width: 90%;
+      display: no;
+
+    }
+
+    header {
+      background-color: r;
+      padding: 20px;
+      color: #b80101;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    h1 {
+      font-size: 3em;
+      margin: 0;
+      color: rgb(255, 2, 2);
+    }
+
+
+    .formulaire-paiement {
+      width: 100%;
+      background-color: rgb(167, 163, 163);
+
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 4px 8px rgba(255, 0, 0, 0.1);
+    }
+
+    .entete {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    .logo {
+      display: flex;
+    }
+
+    .logo img,
+    .blason img {
+      height: 80px;
+      clip-path: circle();
+    }
+
+    .infos-banque {
+      text-align: center;
+    }
+
+    .titre-formulaire {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .form fieldset {
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      padding: 15px;
+      margin-bottom: 15px;
+    }
+
+
+    .radio-group {
+      display: flex;
+
+      margin-bottom: 10px;
+    }
+
+    .radio-group label {
+      margin-right: 25px;
+      color: #3a04ff;
+      font-weight: bolder;
+    }
+
+    .radio-group input[type="radio"] {
+      width: 4vh;
+    }
+
+    .form legend {
+      font-weight: bold;
+      padding: 0 10px;
+    }
+
+    .form label {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    /*ici tout champs input du type text et number*/
+    .form input[type="text"],
+    .form input[type="number"],
+    .form select {
+      width: calc(100% - 62%);
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+
+    .ligne-banque {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 10px;
+    }
+
+    .boutons {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .boutons button {
+      padding: 10px 20px;
+      margin: 0 10px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    #classe {
+      width: 10%;
+    }
+
+    #option {
+      width: 15%;
+    }
+
+    .identite {
+      width: 5%;
+    }
+
+    .boutons button[type="reset"] {
+      background-color: #f44336;
+      color: white;
+      margin-right: 190px;
+      font-weight: bolder;
+      border-radius: 15px;
+      font-size: 25px;
+    }
+
+    .boutons button,
+    [type="submit"] {
+      background-color: #4CAF50;
+      color: white;
+      font-weight: bolder;
+      margin-left: 190px;
+      font-size: 25px;
+      border-radius: 15px;
+    }
+
+    .container {
+      padding: 20px;
+      background-color: var(--couleur-cafe);
+      margin: 20px;
+      border-radius: 8px;
+      color: white;
+    }
+
+    input,
+    select {
+      padding: 10px;
+      margin: 10px;
+      border-radius: 5px;
+      width: 200px;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: var(--orange);
+      color: white;
+      border: none;
+      font-size: 1.1em;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    button:hover {
+      background-color: #ff8c00;
+    }
+
+    table {
+      width: 100%;
+      margin-top: 20px;
+      border-collapse: collapse;
+    }
+
+    /* ici c'est la bordure du tableau*/
+    td {
+      padding: 10px;
+      text-align: left;
+      border: 1px solid #ddd;
+    }
+
+    /* ici c'est le contenu ou les valeur de champs*/
+
+    th {
+      background-color: var(--couleur-cafe);
+      color: rgb(236, 27, 225);
+    }
+
+    td {
+      background-color: #3e2b1f;
+      color: rgb(38, 202, 71);
+    }
+
+    /* ... (interface promoteur) ... */
+
+    .admin-container {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    #passwordSection,
+    #changePasswordSection,
+    #promotInterface {
+      display: none;
+    }
+
+
+    #promotInterface {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      justify-content: center;
+      align-items: center;
+    }
+
+    #promotContent {
+      background-color: rgb(33, 27, 27);
+      padding: 20px;
+      border-radius: 8px;
+      width: 80%;
+      max-width: 800px;
+    }
+
+    #promotContent table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    #promotContent th,
+    #promotContent td {
+      border: 2px solid #2703ee;
+      padding: 8px;
+      text-align: left;
+    }
+
+
+
+    #promotInterface {
+      display: none;
+    }
+
+    #passwordSection {
+      display: none;
+      background-color: #4CAF50;
+    }
+
+    #changePasswordSection {
+      display: none;
+    }
+  </style>
+</head><body>
+  <div class="formulaire-paiement" id="paiement-section">
+    <div class="entete">
+      <div class="logo">
+        <img src="logo.png" alt="Logo">
+        <h2>Complexe scolaire SAINT ESPRIT</h2>
+      </div>
+      <div class="infos-banque">
+        <p>No32 AV/ de l'église / Quartier Kasapa, Commune de Lubumbashi</p>
+        <p>République Démocratique du Congo</p>
+      </div>
+      <div class="blason">
+        <img src="logo.png" alt="logo gauche" onclick="afficherInterfacepassword()">
+      </div>
+    </div>
+
+    <div class="titre-formulaire">
+      <h1>Virement de frais scolaires</h1>
+      <p>*(Veuillez renseigner les cases vides sans erreur et nous les retransmettre)</p>
+    </div>
+
+    <form class="form" action="#" method="post">
+      <fieldset>
+        <legend>IDENTITÉ</legend>
+
+        <div>
+          <label for="nomEleve">Nom de l'élève:</label>
+          <input type="text" id="nomEleve" name="nomEleve" placeholder="Nom de l'élève" class="identite">
+        </div>
+
+        <div>
+          <label for="postNom">Post-nom de l'élève:</label>
+          <input type="text" id="postNom" name="postNom" placeholder="Post-nom de l'élève" class="identite">
+        </div>
+
+        <div>
+          <label for="matricule">Matricule:</label>
+          <input type="text" id="matricule" name="matricule" placeholder="Matricule" class="identite">
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>RÉFÉRENCE</legend>
+
+        <div class="radio-group">
+          <label for="type_frais">Section:</label>
+
+          <input type="radio" id="Maternelle" name="type_frais" value="Maternelle"onclick="choixoption()">
+          <label for="Maternelle">Maternelle</label>
+
+          <input type="radio" id="Primaire" name="type_frais" value="Primaire" onclick="choixoption()">
+          <label for="Primaire">Primaire</label>
+
+          <input type="radio" id="Secondaire" name="type_frais" value="Secondaire" onclick="choixoption()">
+          <label for="Secondaire">Secondaire</label>
+        </div>
+
+        <div>
+          <label for="classe">Classe:</label>
+          <input type="number" id="classe" name="classe" placeholder="Classe">
+        </div>
+
+        <div id="optionBlock" style="display: none;">
+          <label for="option">Option:</label>
+          <select name="option" id="option">
+            <option value="">Sélectionner l'option</option>
+            <option value="Coupe&Couture">Coupe & Couture</option>
+            <option value="Commerciale">Commerciale Informatique</option>
+            <option value="Scientifique">Scientifique</option>
+            <option value="LatinPhilo">Latin Philo</option>
+            <option value="Mecanique">Mécanique Générale</option>
+            <option value="Pedagogie">Pédagogie Générale</option>
+          </select>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>PAIEMENT</legend>
+        <label for="montantChiffres">Montant (Chiffres):</label>
+        <input type="number" id="montantChiffres" name="montantChiffres" placeholder="Montant en chiffres">
+
+        <label for="montantLettres">Montant en lettres:</label>
+        <input type="text" id="montantLettres" name="montantLettres" placeholder="Montant en lettres">
+
+        <label for="motif">Motif:</label>
+        <div class="radio-group" id="motif">
+          <input type="radio" id="fraisScolaires" name="motif" value="Frais Scolaires">
+          <label for="fraisScolaires">Frais scolaires</label>
+
+          <input type="radio" id="fraisEtat" name="motif" value="Frais de l'État">
+          <label for="fraisEtat">Frais de l'État</label>
+
+          <input type="radio" id="fraisBulletin" name="motif" value="Frais de Bulletin">
+          <label for="fraisBulletin">Frais de bulletin</label>
+
+          <input type="radio" id="activitesParascolaire" name="motif" value="Activités Parascolaires">
+          <label for="activitesParascolaire">Activités parascolaires</label>
+        </div>
+      </fieldset>
+
+      <div class="boutons">
+        <button type="reset">Annuler le paiement</button>
+      </div>
+    </form>
+
+    <button onclick="finaliserpaiement()">Confirmer le paiement</button>
+  </div>
+
+  <div id="paiementsEnregistres" style="display: none;">
+    <h1>Paiements Enregistrés</h1>
+    <table id="tableauPaiements">
+      <thead>
+        <tr>
+          <th>Nom de l'élève</th>
+          <th>Post-nom de l'élève</th>
+          <th>Matricule</th>
+          <th>Classe</th>
+          <th>Option</th>
+          <th>Montant (Chiffres)</th>
+          <th>Montant (Lettres)</th>
+          <th>Motif</th>
+          <th>Ville</th>
+          <th>Adresse</th>
+          <th>Date de paiement</th>
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+  </div>
+
+  <div id="passwordSection" class="container">
+    <h2>Mot de passe requis pour l'inventaire</h2>
+    <input type="password" id="passwordInput" placeholder="Entrez votre mot de passe" />
+    <button onclick="verifierMotDePasse()">Connexion</button>
+  </div>
+
+  <div id="promotInterface">
+    <div id="promotContent">
+      <h2>Interface Administrateur</h2>
+      <table id="paiementsTable">
+        <thead>
+          <tr>
+            <th>MATRICULE</th>
+            <th>NOM</th>
+            <th>POSTNOM</th>
+            <th>CLASSE</th>
+            <th>OPTION</th>
+            <th>MONTANT PAYÉ</th>
+            <th>MONTANT EN LETTRE</th>
+            <th>MOTIF</th>
+            <th>DATE DU PAIEMENT</th>
+          
+          </tr>
+        </thead>
+        <tbody> </tbody>
+      </table>
+      <button onclick="paiementsection()">Retourner à la facturation</button>
+    </div>
+  </div>
+
+  <script>
+    const paiements = [];
+    let motDePasseAdmin = "1";
+
+    function afficherJour() {
+      const date = new Date();
+      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      const dateString = date.toLocaleString('fr-FR', options);
+      document.getElementById('jour').textContent = dateString;
+    }
+
+    function finaliserpaiement() {
+      const Nom = document.getElementById('nomEleve').value;
+      const PostNom = document.getElementById('postNom').value;
+      const Matricule = document.getElementById('matricule').value;
+      const classe = parseInt(document.getElementById('classe').value);
+      const option = document.getElementById('option').value;
+      const montantChiffres = parseFloat(document.getElementById('montantChiffres').value);
+      const montantLettres = document.getElementById('montantLettres').value;
+      const motif = document.querySelector('input[name="motif"]:checked')?.value;
+
+      if (!Nom || !PostNom || !Matricule || classe <= 0  || !montantChiffres || !montantLettres || !motif) {
+        alert("Veuillez entrer tous les champs correctement.");
+        return;
+      }
+
+      const datePaiement = new Date().toLocaleDateString('fr-FR');
+      const paiementEleve = { Nom, PostNom, Matricule, classe, option, montantChiffres, montantLettres, motif, datePaiement };
+      paiements.push(paiementEleve);
+
+      document.getElementById('nomEleve').value = '';
+      document.getElementById('postNom').value = '';
+      document.getElementById('matricule').value = '';
+      document.getElementById('classe').value = '';
+      document.getElementById('option').value = '';
+      document.getElementById('montantChiffres').value = '';
+      document.getElementById('montantLettres').value = '';
+      document.getElementById('motif').value = '';
+      
+      updateVirement();
+    }
+
+    function updateVirement() {
+      const tableBody = document.getElementById('paiementsTable').getElementsByTagName('tbody')[0];
+      tableBody.innerHTML = '';
+      let totalPaiements = 0;
+
+      paiements.forEach(paiementEleve => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${paiementEleve.Matricule}</td>
+          <td>${paiementEleve.Nom}</td>
+          <td>${paiementEleve.PostNom}</td>
+          <td>${paiementEleve.classe}</td>
+          <td>${paiementEleve.option}</td>
+          <td>${paiementEleve.montantChiffres.toFixed(2)} FC</td>
+          <td>${paiementEleve.montantLettres}</td>
+          <td>${paiementEleve.motif}</td>
+          <td>${paiementEleve.datePaiement}</td>
+        `;
+        tableBody.appendChild(row);
+        totalPaiements += paiementEleve.montantChiffres;
+      });
+
+      const totalRow = document.createElement('tr');
+      totalRow.innerHTML = `<td colspan="9">Total des paiements: ${totalPaiements.toFixed(2)} FC</td>`;
+      tableBody.appendChild(totalRow);
+    }
+
+    function choixoption() {
+  const optionBlock = document.getElementById('optionBlock');
+  const options = document.querySelector('input[name="option"]:checked');  // Ajouté pour récupérer l'option choisie
+  const sectionSelected = document.querySelector('input[name="type_frais"]:checked')?.value;
+
+  // Masquer le bloc options par défaut
+  optionBlock.style.display = 'none';
+
+  if (sectionSelected === 'Secondaire') {
+    optionBlock.style.display = 'block';  // Afficher le bloc si l'option "Secondaire" est sélectionnée
+
+    // Vérifier si une option est sélectionnée
+    if (!options) {
+      alert("Choisissez l'option.");
+      return;
+    }
+  } 
+  else {
+    optionBlock.style.display = 'none';  // Masquer le bloc dans les autres cas
+  }
+}
+
+
+    function afficherInterfacepassword() {
+      document.getElementById('paiement-section').style.display = 'none';
+      document.getElementById('passwordSection').style.display = 'block';
+    }
+
+    function verifierMotDePasse() {
+      const password = document.getElementById('passwordInput').value;
+      if (password === motDePasseAdmin) {
+        document.getElementById('passwordSection').style.display = 'none';
+        document.getElementById('promotInterface').style.display = 'block';
+      } else {
+        alert("Mot de passe incorrect.");
+      }
+    }
+
+    function paiementsection() {
+      document.getElementById('promotInterface').style.display = 'none';
+      document.getElementById('paiement-section').style.display = 'block';
+    }
+
+    afficherJour();
+  </script>
+</body>
+
+
+
+</html>
